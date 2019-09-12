@@ -1,48 +1,52 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include "mine_sweeper.h"
+/*#include <stdlib.h>*/
+#include "ui.h"
 #include <unistd.h>
 
-extern void GameStart() ;
 int main(int argc, const char *argv[])
 {
+    //主事件循环，接受用户输入
+    while(1){
+        printMenu() ;
+        int opt = GetOpt() ; 
 
-    do{
-        int re ;
-        re = menu( menustr ) ;
-        switch(re){
+        switch( opt ){
+
             case 1 :
-                InitAll() ;
                 printf("开始游戏\n") ;
+                //进入游戏，在GameStart()中初始化
+                //InitAll() ;
                 GameStart() ;
-                goto EXIT ;
+                //goto EXIT ;
+
+                printBye() ;
+                return 0 ;
 
             case 2 :
-                printf("当前配置为:\n") ;
-                printf("length     = %d\n", length) ;
-                printf("width      = %d\n", width) ;
-                printf("MineNumber = %d\n", mnum) ;
-                submenu() ;                
+                //打印当前配置
+                printConf() ;
+                putchar('\n') ;
+                SubMenu() ;
                 break ;
 
             case 3 :
-                puts(helpstr) ;
-                printf("\n请按任意键返回") ;
-                FFLUSH ;
+                //打印帮助信息
+                printHelp() ;
                 break ;
 
             case 4 :
-                goto EXIT ;
+                //打印再见信息
+                //退出程序
+                printBye() ;
+                return 0 ;
 
             default :
                 printf("无效的选项!请重新选择\n\n") ;
-                sleep(1) ;
                 break ;
         }
-    }while(1) ;
+    }
     
-EXIT:
-    free(field) ;
-    free(output) ;
     return 0;
 }
+
+

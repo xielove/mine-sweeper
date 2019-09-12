@@ -3,44 +3,39 @@
 
 #define PATTERN_ONE {\
 printf("    ") ;\
-for(int i = 'A' ; i < 'A' + width; i++){\
+for(int i = 'A' ; i < 'A' + G_width; i++){\
     printf(" %c  ", (char)i ) ;\
 }\
 printf("\n") ;\
 } 
 #define PATTERN_TWO {\
 printf("   +") ;\
-for(int i = 'A' ; i < 'A' + width; i++){\
+for(int i = 'A' ; i < 'A' + G_width; i++){\
     printf("---+") ;\
 }\
 printf("\n") ;\
 }
-
-void printSuccess() //完成游戏后输出
+char *SucStr = "\
+  _____                _   \n\
+ / ____|              | |  \n\
+| |  __ _ __ ___  __ _| |_ \n\
+| | |_ | '__/ _ \\/ _` | __|\n\
+| |__| | | |  __/ (_| | |_ \n\
+ \\_____|_|  \\___|\\__,_|\\__|\n\
+";
+void printSuc() //完成游戏后输出
 {
-    printf("GREAT!YOU SUCCEED!") ;
-    printf("           *\n") ;
-    printf("          ***\n") ;
-    printf("         *****\n") ;
-    printf("        *** ***\n") ;
-    printf("       ***   ***\n") ;
-    printf("      ***     ***\n") ;
-    printf("     *************\n") ;
-    printf("    ***************\n") ;
-    printf("   ***           ***\n") ;
-    printf("  ***             ***\n") ;
-    printf(" ***               ***\n") ;
-    printf("***                 ***\n") ;
+    puts(SucStr) ;
 }
 
 void printOutput()
 {
     PATTERN_ONE ;
     PATTERN_TWO ;
-    for(int i = 0 ; i < length ; i++){
+    for(int i = 0 ; i < G_length ; i++){
         printf("%2d |" , i+1) ;
-        for(int j = 0 ; j < width ; j++){
-            printf(" %c |", output[i][j]) ;
+        for(int j = 0 ; j < G_width ; j++){
+            printf(" %c |", G_output[i][j]) ;
         }
 
         printf("\n") ;
@@ -50,16 +45,16 @@ void printOutput()
 
 void printAnswer()//输出答案
 {
-    for(int i = 0 ; i < length ; i++){
-    for(int j = 0 ; j < width ; j++){
-        if( field[i][j] ){
-            output[i][j] = SYMBOL_MINE ;
+    for(int i = 0 ; i < G_length ; i++){
+    for(int j = 0 ; j < G_width ; j++){
+        if( G_field[i][j] ){
+            G_output[i][j] = SYMBOL_MINE ;
         }else{
             int cnt = MineCount(i, j) ; //mine_count():计算周围九宫格内的地雷数量
             if( !cnt )
-                output[i][j] = SYMBOL_SPACE ;
+                G_output[i][j] = SYMBOL_SPACE ;
             else
-                output[i][j] = '0' + cnt ;
+                G_output[i][j] = '0' + cnt ;
         }
     }
     }
