@@ -1,59 +1,64 @@
 
 #include <stdio.h>
-#include "mine_sweeper.h"
+#include "ui.h"
 #include <unistd.h>
 
-int menu(char *str)
+int GetOpt()
 {
-    int option ;
-    puts(str) ;
-    printf("请输入你的选择:") ;
-    int status = scanf("%d", &option) ;
-    FFLUSH ;
-    if( status == 0 )
-        option = -1 ;
+    //设置默认返回值为0
+    int option = 0 ;
+
+    scanf("%d", &option) ;
+    EmptyBuffer() ;
+
     return option ;
 }
 
 
-void submenu()
+void SubMenu()
 {
-    int subre ;
 
 REOPT :
-    subre = menu( submenustr ) ;
-    switch(subre){
+    printSubMenu() ;
+    int opt = GetOpt() ;
+
+    switch( opt ){
         case 1 :
-            config(9, 9, 10) ;
+            ParmConf(9, 9, 10) ;
             break ;
+
         case 2 :
-            config(16, 16, 40) ;
+            ParmConf(16, 16, 40) ;
             break ;
+
         case 3 :
-            config(30, 25, 99) ;
+            ParmConf(30, 25, 99) ;
             break ;
+
         case 4 :
-            printf("请输入自定义参数:\n") ;
-            int parl, parw, parn ;
-            printf("Length Width MineNumber\n") ;
-            int status = scanf("%d%d%d", &parl, &parw, &parn) ;
-            FFLUSH ;
-            if( status != 3 || parl <= 0 || parw <= 0 || parn <=0){
-                fprintf(stderr, "错误的输入！恢复默认设置！\n") ;
-                config(9, 9, 10) ;
-            }else{
-                config(parl, parw, parn) ;
-                printf("配置已经修改\n") ;
-                sleep(1) ;
+            printf("-------------------------------------------------\n") ;
+            printf("|   请依次输入雷区的长度，宽度及雷的数量\n") ;
+            printf("|   3<= length <=40\n") ;
+            printf("|   3<= width  <=26\n") ;
+            printf("-------------------------------------------------\n") ;
+            int status ;
+            int len, wid, num ;
+            status = GetParm(&len, &wid, &num) ;
+            if( !status )
+                ParmConf(len, wid, num) ;
+            else{
+                fprintf(stderr, "无效的参数！\n\n") ;
+                goto REOPT ;
             }
+
             break ;
+
         case 5 :
             break ;
 
         default :
             printf("无效的选项!请重新选择\n") ;
             goto REOPT ;
-            break ;
     }
 
 }

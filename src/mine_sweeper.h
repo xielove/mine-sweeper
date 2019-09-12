@@ -14,40 +14,34 @@
 #define SYMBOL_MINE   36
 
 
-#define FFLUSH {\
+#define EmptyBuffer() {\
     int c ;\
     while((c = getchar()) != EOF && c != '\n') ;\
 }
 
-typedef struct{
-    int x ;
-    int y ;
-}Coordinate ;
 
 
-extern int length ;
-extern int width ;
-extern int mnum ;
+//全局变量用'G_'作为前缀
+//雷区的参数
+extern int G_length ;   //雷区长度
+extern int G_width ;    //雷区宽度
+extern int G_mnum ;     //雷的数量
+extern int **G_field ;  //指向雷区
+extern int **G_output ; //指向输出
+
 extern int touched ;
 extern int square ;
-extern int **field ;
-extern int **output ;
 
-extern char *menustr ;
-extern char *submenustr ;
-extern char *helpstr ;
-
-void creat() ;
+void Creat() ;
 void InitAll() ;
 
-int EffectCoordinates(int fi, int fj) ;
-int MineCount(int fi, int fj) ;
+int EffectLocate(int , int) ;
+int MineCount(int , int ) ;
+int MoniClick(int , int) ;
+int GetLocate()  ;
 
-int menu(char *str) ;
 void printAnswer() ;
 void printOutput() ;
-
-void config(int, int, int) ;
-void submenu() ;
+void printSuc() ;
 
 #endif

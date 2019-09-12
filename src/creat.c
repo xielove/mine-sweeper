@@ -11,23 +11,22 @@ static const int Size_int_p = sizeof(int*) ;
 //|        |        |        |        | ... |    |    |    |  ...  |    |    |
 //----------------------------------------------------------------------------
 //前面Size_int_p * lenth 个字节是length个指针
-//后面分配length*width*Size_int个字节作为数据区
+//后面分配length*G_width*Size_int个字节作为数据区
 //其中length个指针分别指向含有width个int数据的一维数组
 //从而模拟出一个二维数组
 //
-void creat()
+void Creat()
 {
     //申请存储空间
-    field  = (int **)malloc( length*Size_int_p + length*width*Size_int ) ;
-    output = (int **)malloc( length*Size_int_p + length*width*Size_int ) ;
-
-    if( field == NULL || output == NULL ){
+    G_field  = (int **)malloc( G_length*Size_int_p + G_length*G_width*Size_int ) ;
+    G_output = (int **)malloc( G_length*Size_int_p + G_length*G_width*Size_int ) ;
+    if( G_field == NULL || G_output == NULL ){
         fprintf(stderr, "分配空间失败\n") ;
         exit(EXIT_FAILED) ;
     }
-    for(int i = 0; i < length; i++){
-        field[i]  = (int *)(field + length) + i * width ;
-        output[i] = (int *)(output + length) + i * width ;
+    for(int i = 0; i < G_length; i++){
+        G_field[i]  = (int *)(G_field + G_length) + i * G_width ;
+        G_output[i] = (int *)(G_output + G_length) + i * G_width ;
     }
 
 }

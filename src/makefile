@@ -1,6 +1,7 @@
-object=main.o init.o creat.o config.o menu.o print.o variable.o count.o game.o
+object=main.o UiPrint.o UiVar.o config.o menu.o Game.o count.o run.o creat.c init.c print.c
 
-main :  ${object} makefile
+main : ${object} makefile
 	gcc ${object} -o main
 
-${object} : mine_sweeper.h
+${object} : ui.h mine_sweeper.h
+
